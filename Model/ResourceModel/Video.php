@@ -39,8 +39,7 @@ class Video extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
             $this->getMainTable()
         )->where(
             'value_id IN(?)',
-            $ids,
-            \Zend_Db::INT_TYPE
+            $ids
         );
 
         return $this->getConnection()->fetchAll($select);
