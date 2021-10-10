@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -53,9 +54,6 @@ class ExternalVideoEntryConverterTest extends TestCase
      */
     protected $modelObject;
 
-    /**
-     * @inheritdoc
-     */
     protected function setUp(): void
     {
         $this->mediaGalleryEntryFactoryMock = $this->createPartialMock(
@@ -84,7 +82,7 @@ class ExternalVideoEntryConverterTest extends TestCase
                     'getContent',
                     'setContent',
                     'getExtensionAttributes',
-                    'setExtensionAttributes'
+                    'setExtensionAttributes',
                 ]
             );
 
@@ -122,23 +120,17 @@ class ExternalVideoEntryConverterTest extends TestCase
                 'mediaGalleryEntryFactory' => $this->mediaGalleryEntryFactoryMock,
                 'dataObjectHelper' => $this->dataObjectHelperMock,
                 'videoEntryFactory' => $this->videoEntryFactoryMock,
-                'mediaGalleryEntryExtensionFactory' => $this->mediaGalleryEntryExtensionFactoryMock
+                'mediaGalleryEntryExtensionFactory' => $this->mediaGalleryEntryExtensionFactoryMock,
             ]
         );
     }
 
-    /**
-    * @return void
-    */
-    public function testGetMediaEntryType(): void
+    public function testGetMediaEntryType()
     {
         $this->assertEquals($this->modelObject->getMediaEntryType(), 'external-video');
     }
 
-    /**
-    * @return void
-    */
-    public function testConvertTo(): void
+    public function testConvertTo()
     {
         /** @var  MockObject|Product $product */
         $product = $this->createMock(Product::class);
@@ -158,14 +150,14 @@ class ExternalVideoEntryConverterTest extends TestCase
             'video_url' => 'https://www.youtube.com/watch?v=abcdefghij',
             'video_title' => '111',
             'video_description' => null,
-            'video_metadata' => null
+            'video_metadata' => null,
         ];
 
         $productImages = [
             'image' => '/s/a/sample_3.jpg',
             'small_image' => '/s/a/sample-1_1.jpg',
             'thumbnail' => '/s/a/sample-1_1.jpg',
-            'swatch_image' => '/s/a/sample_3.jpg'
+            'swatch_image' => '/s/a/sample_3.jpg',
         ];
 
         $product->expects($this->once())->method('getMediaAttributeValues')->willReturn($productImages);
@@ -175,10 +167,7 @@ class ExternalVideoEntryConverterTest extends TestCase
         $this->modelObject->convertTo($product, $rowData);
     }
 
-    /**
-    * @return void
-    */
-    public function testConvertFrom(): void
+    public function testConvertFrom()
     {
         $this->mediaGalleryEntryMock->expects($this->once())->method('getId')->willReturn('4');
         $this->mediaGalleryEntryMock->expects($this->once())->method('getFile')->willReturn('/i/n/index111111.jpg');
@@ -220,7 +209,7 @@ class ExternalVideoEntryConverterTest extends TestCase
             'video_url' => 'https://www.youtube.com/watch?v=abcdefghij',
             'video_title' => 'Some video title',
             'video_description' => 'Some video description',
-            'video_metadata' => 'Meta data'
+            'video_metadata' => 'Meta data',
         ];
 
         $result = $this->modelObject->convertFrom($this->mediaGalleryEntryMock);
@@ -239,9 +228,9 @@ class ExternalVideoEntryConverterTest extends TestCase
         try {
             $mockBuilder->addMethods(
                 [
+                    'getVideoProvider',
                     'setVideoContent',
                     'getVideoContent',
-                    'getVideoProvider'
                 ]
             );
         } catch (RuntimeException $e) {
